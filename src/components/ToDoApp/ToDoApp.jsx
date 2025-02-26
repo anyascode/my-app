@@ -1,6 +1,7 @@
 import TaskList from "../TaskList/TaskList";
 import NewTaskForm from "../NewTaskForm/NewTaskForm";
 import Footer from "../Footer/Footer";
+import "./ToDoApp.css";
 
 function ToDoApp() {
   const tasksData = [

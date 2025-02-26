@@ -1,5 +1,6 @@
 import PropTypes from "prop-types"; // Импорт PropTypes
 import Task from "../Task/Task";
+import "./TaskList.css";
 
 function TaskList({ tasks }) {
   return (

@@ -1,4 +1,6 @@
-function NewTaskForm() {
+import "./NewTaskForm.css";
+
+export default function NewTaskForm() {
   return (
     <input
       className="new-todo"
@@ -7,5 +9,3 @@ function NewTaskForm() {
     />
   );
 }
-
-export default NewTaskForm;
