@@ -1,12 +1,22 @@
 import TasksFilter from "../TasksFilter/TasksFilter";
 import "./Footer.css";
 
-function Footer() {
+function Footer({
+  currentFilter,
+  onFilterChange,
+  onClearCompleted,
+  tasksNumber,
+}) {
   return (
     <footer className="footer">
-      <span className="todo-count">1 items left</span>
-      <TasksFilter />
-      <button className="clear-completed">Clear completed</button>
+      <span className="todo-count">{tasksNumber} items left</span>
+      <TasksFilter
+        currentFilter={currentFilter}
+        onFilterChange={onFilterChange}
+      />
+      <button className="clear-completed" onClick={onClearCompleted}>
+        Clear completed
+      </button>
     </footer>
   );
 }

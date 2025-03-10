@@ -11,6 +11,7 @@ function TaskList({ tasks, onDeleteTodo, completeTodo }) {
             onDelete={onDeleteTodo}
             todoId={item.id}
             onComplete={() => completeTodo(item.id)}
+            isChecked={item.done}
           />
         </li>
       ))}
