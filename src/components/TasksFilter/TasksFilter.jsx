@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function TasksFilter({ currentFilter, onFilterChange }) {
   return (
     <ul className="filters">
@@ -28,5 +30,10 @@ function TasksFilter({ currentFilter, onFilterChange }) {
     </ul>
   );
 }
+
+TasksFilter.propTypes = {
+  currentFilter: PropTypes.object,
+  onFilterChange: PropTypes.func,
+};
 
 export default TasksFilter;

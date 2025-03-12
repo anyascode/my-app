@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./NewTaskForm.css";
+import PropTypes from "prop-types";
 
 export default function NewTaskForm({ onAddTodo }) {
   const [title, setTitle] = useState("");
@@ -22,3 +23,7 @@ export default function NewTaskForm({ onAddTodo }) {
     />
   );
 }
+
+NewTaskForm.propTypes = {
+  onAddTodo: PropTypes.func,
+};

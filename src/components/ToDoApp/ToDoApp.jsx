@@ -16,6 +16,7 @@ function ToDoApp() {
         id: nextId,
         title: title,
         done: false,
+        createdAt: new Date(),
       },
     ]);
     setNextId((prevId) => prevId + 1);

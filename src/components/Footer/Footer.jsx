@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import TasksFilter from "../TasksFilter/TasksFilter";
 import "./Footer.css";
 
@@ -20,5 +21,12 @@ function Footer({
     </footer>
   );
 }
+
+Footer.propTypes = {
+  currentFilter: PropTypes.object,
+  onFilterChange: PropTypes.func,
+  onClearCompleted: PropTypes.func,
+  tasksNumber: PropTypes.number,
+};
 
 export default Footer;
