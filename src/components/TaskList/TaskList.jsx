@@ -1,12 +1,12 @@
-import Task from "../Task/Task";
-import "./TaskList.css";
-import PropTypes from "prop-types";
+import Task from '../Task/Task';
+import './TaskList.css';
+import PropTypes from 'prop-types';
 
 function TaskList({ tasks, onDeleteTodo, completeTodo }) {
   return (
     <ul className="todo-list">
       {tasks.map((item) => (
-        <li key={item.id} className={item.done ? "completed" : ""}>
+        <li key={item.id} className={item.done ? 'completed' : ''}>
           <Task
             title={item.title}
             onDelete={onDeleteTodo}

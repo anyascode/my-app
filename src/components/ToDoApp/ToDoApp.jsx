@@ -1,13 +1,13 @@
-import { useState } from "react";
-import TaskList from "../TaskList/TaskList";
-import NewTaskForm from "../NewTaskForm/NewTaskForm";
-import Footer from "../Footer/Footer";
-import "./ToDoApp.css";
+import { useState } from 'react';
+import TaskList from '../TaskList/TaskList';
+import NewTaskForm from '../NewTaskForm/NewTaskForm';
+import Footer from '../Footer/Footer';
+import './ToDoApp.css';
 
 function ToDoApp() {
   const [tasks, setTasks] = useState([]);
   const [nextId, setNextId] = useState(1);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState('all');
 
   function handleAddTodo(title) {
     setTasks((prevTasks) => [
@@ -27,16 +27,12 @@ function ToDoApp() {
   }
 
   function completeTodo(todoId) {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === todoId ? { ...task, done: !task.done } : task
-      )
-    );
+    setTasks((prevTasks) => prevTasks.map((task) => (task.id === todoId ? { ...task, done: !task.done } : task)));
   }
 
   const filteredTasks = tasks.filter((task) => {
-    if (filter === "active") return !task.done;
-    if (filter === "completed") return task.done;
+    if (filter === 'active') return !task.done;
+    if (filter === 'completed') return task.done;
     return true;
   });
 
@@ -50,6 +46,8 @@ function ToDoApp() {
 
   const remainingTasks = tasks.filter((task) => !task.done).length;
 
+  console.log('hello world');
+
   return (
     <section className="todoapp">
       <header className="header">
@@ -57,11 +55,7 @@ function ToDoApp() {
         <NewTaskForm onAddTodo={handleAddTodo} />
       </header>
       <section className="main">
-        <TaskList
-          tasks={filteredTasks}
-          onDeleteTodo={handleDeleteTodo}
-          completeTodo={completeTodo}
-        />
+        <TaskList tasks={filteredTasks} onDeleteTodo={handleDeleteTodo} completeTodo={completeTodo} />
         <Footer
           currentFilter={filter}
           onFilterChange={handleFilterChange}

@@ -1,19 +1,14 @@
-import PropTypes from "prop-types";
-import { formatDistanceToNow } from "date-fns";
+import PropTypes from 'prop-types';
+import { formatDistanceToNow } from 'date-fns';
 
 function Task({ title, onDelete, todoId, onComplete, isChecked, createdAt }) {
   return (
     <div className="view">
-      <input
-        className="toggle"
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => onComplete(todoId)}
-      />
-      <label onClick={() => onComplete(todoId)}>
+      <input className="toggle" type="checkbox" checked={isChecked} onChange={() => onComplete(todoId)} />
+      <label>
         <span className="description">{title}</span>
         <span className="created">
-          created{" "}
+          created{' '}
           {formatDistanceToNow(new Date(createdAt), {
             addSuffix: true,
             includeSeconds: true,
@@ -21,10 +16,7 @@ function Task({ title, onDelete, todoId, onComplete, isChecked, createdAt }) {
         </span>
       </label>
       <button className="icon icon-edit"></button>
-      <button
-        className="icon icon-destroy"
-        onClick={() => onDelete(todoId)}
-      ></button>
+      <button className="icon icon-destroy" onClick={() => onDelete(todoId)}></button>
     </div>
   );
 }
