@@ -1,70 +1,102 @@
-import { useState } from 'react';
+import { Component } from 'react';
 import TaskList from '../TaskList/TaskList';
 import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import Footer from '../Footer/Footer';
 import './ToDoApp.css';
 
-function ToDoApp() {
-  const [tasks, setTasks] = useState([]);
-  const [nextId, setNextId] = useState(1);
-  const [filter, setFilter] = useState('all');
-
-  function handleAddTodo(title) {
-    setTasks((prevTasks) => [
-      ...prevTasks,
-      {
-        id: nextId,
-        title: title,
-        done: false,
-        createdAt: new Date(),
-      },
-    ]);
-    setNextId((prevId) => prevId + 1);
+class ToDoApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [],
+      nextId: 1,
+      filter: 'all',
+    };
+    this.handleAddTodo = this.handleAddTodo.bind(this);
+    this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
+    this.completeTodo = this.completeTodo.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleClearCompleted = this.handleClearCompleted.bind(this);
+    this.handleEditTodo = this.handleEditTodo.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
-
-  function handleDeleteTodo(todoId) {
-    setTasks((prevTasks) => prevTasks.filter((t) => t.id !== todoId));
+  handleAddTodo(title) {
+    this.setState((prev) => ({
+      tasks: [
+        ...prev.tasks,
+        {
+          id: prev.nextId,
+          title: title,
+          done: false,
+          isEditing: false,
+          createdAt: new Date(),
+        },
+      ],
+      nextId: prev.nextId + 1,
+    }));
   }
-
-  function completeTodo(todoId) {
-    setTasks((prevTasks) => prevTasks.map((task) => (task.id === todoId ? { ...task, done: !task.done } : task)));
+  handleDeleteTodo(todoId) {
+    this.setState((prev) => ({
+      tasks: prev.tasks.filter((task) => task.id !== todoId),
+    }));
   }
-
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'active') return !task.done;
-    if (filter === 'completed') return task.done;
-    return true;
-  });
-
-  function handleFilterChange(newFilter) {
-    setFilter(newFilter);
+  completeTodo(todoId) {
+    this.setState((prev) => ({
+      tasks: prev.tasks.map((task) => (task.id === todoId ? { ...task, done: !task.done } : task)),
+    }));
   }
-
-  function handleClearCompleted() {
-    setTasks((prevTasks) => prevTasks.filter((task) => !task.done));
+  handleFilterChange(newFilter) {
+    this.setState({ filter: newFilter });
   }
-
-  const remainingTasks = tasks.filter((task) => !task.done).length;
-
-  console.log('hello world');
-
-  return (
-    <section className="todoapp">
-      <header className="header">
-        <h1>todos</h1>
-        <NewTaskForm onAddTodo={handleAddTodo} />
-      </header>
-      <section className="main">
-        <TaskList tasks={filteredTasks} onDeleteTodo={handleDeleteTodo} completeTodo={completeTodo} />
-        <Footer
-          currentFilter={filter}
-          onFilterChange={handleFilterChange}
-          onClearCompleted={handleClearCompleted}
-          tasksNumber={remainingTasks}
-        />
+  handleClearCompleted() {
+    this.setState((prev) => ({
+      tasks: prev.tasks.filter((task) => !task.done),
+    }));
+  }
+  handleEditTodo(todoId) {
+    this.setState((prev) => ({
+      tasks: prev.tasks.map((task) => (task.id === todoId ? { ...task, isEditing: !task.isEditing } : task)),
+    }));
+  }
+  editTask(newTitle, todoId) {
+    this.setState((prev) => ({
+      tasks: prev.tasks.map((task) =>
+        task.id === todoId ? { ...task, title: newTitle, isEditing: !task.isEditing } : task
+      ),
+    }));
+  }
+  render() {
+    const { tasks, filter } = this.state;
+    const filteredTasks = tasks.filter((task) => {
+      if (filter === 'active') return !task.done;
+      if (filter === 'completed') return task.done;
+      return true;
+    });
+    const remainingTasks = tasks.filter((task) => !task.done).length;
+    return (
+      <section className="todoapp">
+        <header className="header">
+          <h1>todos</h1>
+          <NewTaskForm onAddTodo={this.handleAddTodo} />
+        </header>
+        <section className="main">
+          <TaskList
+            tasks={filteredTasks}
+            onDeleteTodo={this.handleDeleteTodo}
+            completeTodo={this.completeTodo}
+            onEditTodo={this.handleEditTodo}
+            editTask={this.editTask}
+          />
+          <Footer
+            currentFilter={filter}
+            onFilterChange={this.handleFilterChange}
+            onClearCompleted={this.handleClearCompleted}
+            tasksNumber={remainingTasks}
+          />
+        </section>
       </section>
-    </section>
-  );
+    );
+  }
 }
 
 export default ToDoApp;

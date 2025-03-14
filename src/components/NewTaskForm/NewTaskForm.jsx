@@ -1,28 +1,49 @@
-import { useState } from 'react';
-import './NewTaskForm.css';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
+import './NewTaskForm.css';
 
-export default function NewTaskForm({ onAddTodo }) {
-  const [title, setTitle] = useState('');
+class NewTaskForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+    };
+  }
 
-  const handleKeyDown = (e) => {
+  handleKeyDown = (e) => {
+    const { title } = this.state;
+    const { onAddTodo } = this.props;
+
     if (e.code === 'Enter' && title.trim() !== '') {
+      e.preventDefault();
       onAddTodo(title.trim());
-      setTitle('');
+      this.setState({ title: '' });
     }
   };
 
-  return (
-    <input
-      className="new-todo"
-      placeholder="What needs to be done?"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      onKeyDown={handleKeyDown}
-    />
-  );
+  handleChange = (e) => {
+    this.setState({ title: e.target.value });
+  };
+
+  render() {
+    const { title } = this.state;
+
+    return (
+      <form>
+        <input
+          className="new-todo"
+          placeholder="What needs to be done?"
+          value={title}
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+        />
+      </form>
+    );
+  }
 }
 
 NewTaskForm.propTypes = {
-  onAddTodo: PropTypes.func,
+  onAddTodo: PropTypes.func.isRequired,
 };
+
+export default NewTaskForm;
