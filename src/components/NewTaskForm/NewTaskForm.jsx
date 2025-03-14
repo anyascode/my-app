@@ -36,6 +36,7 @@ class NewTaskForm extends Component {
           value={title}
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
+          autoFocus
         />
       </form>
     );

@@ -34,7 +34,14 @@ class EditTask extends Component {
           <button className="icon icon-edit"></button>
           <button className="icon icon-destroy"></button>
         </div>
-        <input type="text" className="edit" onKeyDown={this.handleKeyDown} value={title} onChange={this.handleChange} />
+        <input
+          type="text"
+          className="edit"
+          onKeyDown={this.handleKeyDown}
+          value={title}
+          onChange={this.handleChange}
+          autoFocus
+        />
       </li>
     );
   }
