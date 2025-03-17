@@ -13,7 +13,6 @@ class NewTaskForm extends Component {
   handleKeyDown = (e) => {
     const { title } = this.state;
     const { onAddTodo } = this.props;
-
     if (e.code === 'Enter' && title.trim() !== '') {
       e.preventDefault();
       onAddTodo(title.trim());
@@ -25,11 +24,15 @@ class NewTaskForm extends Component {
     this.setState({ title: e.target.value });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   render() {
     const { title } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <input
           className="new-todo"
           placeholder="What needs to be done?"
