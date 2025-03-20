@@ -20,7 +20,7 @@ class ToDoApp extends Component {
     this.handleEditTodo = this.handleEditTodo.bind(this);
     this.editTask = this.editTask.bind(this);
   }
-  handleAddTodo(title) {
+  handleAddTodo(title, minutes, seconds) {
     this.setState((prev) => ({
       tasks: [
         ...prev.tasks,
@@ -30,6 +30,8 @@ class ToDoApp extends Component {
           done: false,
           isEditing: false,
           createdAt: new Date(),
+          minutes: minutes,
+          seconds: seconds,
         },
       ],
       nextId: prev.nextId + 1,
@@ -72,11 +74,14 @@ class ToDoApp extends Component {
       if (filter === 'completed') return task.done;
       return true;
     });
+    console.log(tasks);
+
     const remainingTasks = tasks.filter((task) => !task.done).length;
     return (
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
+
           <NewTaskForm onAddTodo={this.handleAddTodo} />
         </header>
         <section className="main">

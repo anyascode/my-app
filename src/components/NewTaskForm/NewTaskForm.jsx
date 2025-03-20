@@ -7,21 +7,36 @@ class NewTaskForm extends Component {
     super(props);
     this.state = {
       title: '',
+      minutes: '',
+      seconds: '',
     };
   }
 
   handleKeyDown = (e) => {
-    const { title } = this.state;
+    const { title, minutes, seconds } = this.state;
     const { onAddTodo } = this.props;
-    if (e.code === 'Enter' && title.trim() !== '') {
+    if (
+      e.code === 'Enter' &&
+      title.trim() !== '' &&
+      Number.isInteger(Number(minutes)) &&
+      Number.isInteger(Number(seconds))
+    ) {
       e.preventDefault();
-      onAddTodo(title.trim());
-      this.setState({ title: '' });
+      onAddTodo(title.trim(), minutes, seconds);
+      this.setState({ title: '', minutes: '', seconds: '' });
     }
   };
 
-  handleChange = (e) => {
+  handleChangeTask = (e) => {
     this.setState({ title: e.target.value });
+  };
+
+  handleChangeMinute = (e) => {
+    this.setState({ minutes: e.target.value });
+  };
+
+  handleChangeSeconds = (e) => {
+    this.setState({ seconds: e.target.value });
   };
 
   handleSubmit = (e) => {
@@ -29,17 +44,25 @@ class NewTaskForm extends Component {
   };
 
   render() {
-    const { title } = this.state;
+    const { title, minutes, seconds } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="new-todo-form" onSubmit={this.handleSubmit}>
+        <input className="new-todo" placeholder="Task" value={title} autoFocus onChange={this.handleChangeTask} />
         <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          value={title}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
+          className="new-todo-form__timer"
+          placeholder="Min"
+          value={minutes}
           autoFocus
+          onChange={this.handleChangeMinute}
+        />
+        <input
+          className="new-todo-form__timer"
+          placeholder="Sec"
+          autoFocus
+          onKeyDown={this.handleKeyDown}
+          onChange={this.handleChangeSeconds}
+          value={seconds}
         />
       </form>
     );

@@ -19,6 +19,7 @@ function TaskList({ tasks, onDeleteTodo, completeTodo, onEditTodo, editTask }) {
             isChecked={item.done}
             createdAt={item.createdAt}
             onEdit={onEditTodo}
+            seconds={item.minutes * 60 + Number(item.seconds)}
           />
         )
       )}
