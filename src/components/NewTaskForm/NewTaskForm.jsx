@@ -49,17 +49,10 @@ class NewTaskForm extends Component {
     return (
       <form className="new-todo-form" onSubmit={this.handleSubmit}>
         <input className="new-todo" placeholder="Task" value={title} autoFocus onChange={this.handleChangeTask} />
-        <input
-          className="new-todo-form__timer"
-          placeholder="Min"
-          value={minutes}
-          autoFocus
-          onChange={this.handleChangeMinute}
-        />
+        <input className="new-todo-form__timer" placeholder="Min" value={minutes} onChange={this.handleChangeMinute} />
         <input
           className="new-todo-form__timer"
           placeholder="Sec"
-          autoFocus
           onKeyDown={this.handleKeyDown}
           onChange={this.handleChangeSeconds}
           value={seconds}

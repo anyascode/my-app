@@ -74,8 +74,6 @@ class ToDoApp extends Component {
       if (filter === 'completed') return task.done;
       return true;
     });
-    console.log(tasks);
-
     const remainingTasks = tasks.filter((task) => !task.done).length;
     return (
       <section className="todoapp">
