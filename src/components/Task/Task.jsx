@@ -69,8 +69,6 @@ class Task extends Component {
   }
 }
 
-// function Task({ title, onDelete, todoId, onComplete, isChecked, createdAt, onEdit, minutes, seconds }) {}
-
 Task.propTypes = {
   title: PropTypes.string,
   onDelete: PropTypes.func,
