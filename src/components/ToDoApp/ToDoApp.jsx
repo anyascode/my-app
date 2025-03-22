@@ -12,6 +12,9 @@ class ToDoApp extends Component {
       nextId: 1,
       filter: 'all',
     };
+
+    this.timeoutId = -1;
+
     this.handleAddTodo = this.handleAddTodo.bind(this);
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
     this.completeTodo = this.completeTodo.bind(this);
@@ -19,8 +22,27 @@ class ToDoApp extends Component {
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
     this.handleEditTodo = this.handleEditTodo.bind(this);
     this.editTask = this.editTask.bind(this);
+    this.toggleTimer = this.toggleTimer.bind(this);
   }
-  handleAddTodo(title, minutes, seconds) {
+
+  componentDidMount() {
+    this.timeoutId = setInterval(() => {
+      this.setState((prev) => ({
+        ...prev,
+        tasks: prev.tasks.map((task) => ({
+          ...task,
+          seconds: task.status === 'active' ? task.seconds - 1 : task.seconds,
+          status: task.status === 'active' && task.seconds - 1 <= 0 ? 'done' : task.status,
+        })),
+      }));
+    }, 1_000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeoutId);
+  }
+
+  handleAddTodo(title, seconds) {
     this.setState((prev) => ({
       tasks: [
         ...prev.tasks,
@@ -30,8 +52,8 @@ class ToDoApp extends Component {
           done: false,
           isEditing: false,
           createdAt: new Date(),
-          minutes: minutes,
           seconds: seconds,
+          status: 'idle',
         },
       ],
       nextId: prev.nextId + 1,
@@ -67,6 +89,12 @@ class ToDoApp extends Component {
       ),
     }));
   }
+  toggleTimer(todoId, newStatus) {
+    this.setState((prev) => ({
+      ...prev,
+      tasks: prev.tasks.map((task) => (task.id === todoId ? { ...task, status: newStatus } : task)),
+    }));
+  }
   render() {
     const { tasks, filter } = this.state;
     const filteredTasks = tasks.filter((task) => {
@@ -89,6 +117,7 @@ class ToDoApp extends Component {
             completeTodo={this.completeTodo}
             onEditTodo={this.handleEditTodo}
             editTask={this.editTask}
+            onToggleTimer={this.toggleTimer}
           />
           <Footer
             currentFilter={filter}

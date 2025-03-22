@@ -3,60 +3,25 @@ import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
 class NewTaskForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-      minutes: '',
-      seconds: '',
-    };
-  }
-
-  handleKeyDown = (e) => {
-    const { title, minutes, seconds } = this.state;
-    const { onAddTodo } = this.props;
-    if (
-      e.code === 'Enter' &&
-      title.trim() !== '' &&
-      Number.isInteger(Number(minutes)) &&
-      Number.isInteger(Number(seconds))
-    ) {
-      e.preventDefault();
-      onAddTodo(title.trim(), minutes, seconds);
-      this.setState({ title: '', minutes: '', seconds: '' });
-    }
-  };
-
-  handleChangeTask = (e) => {
-    this.setState({ title: e.target.value });
-  };
-
-  handleChangeMinute = (e) => {
-    this.setState({ minutes: e.target.value });
-  };
-
-  handleChangeSeconds = (e) => {
-    this.setState({ seconds: e.target.value });
-  };
-
   handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const task = formData.get('task');
+    const minutes = formData.get('minutes');
+    const seconds = formData.get('seconds');
+
+    if (task.trim() !== '' && Number.isInteger(Number(minutes)) && Number.isInteger(Number(seconds))) {
+      this.props.onAddTodo(task.trim(), Number(minutes || 0) * 60 + Number(seconds || 0));
+      e.currentTarget.reset();
+    }
   };
-
   render() {
-    const { title, minutes, seconds } = this.state;
-
     return (
       <form className="new-todo-form" onSubmit={this.handleSubmit}>
-        <input className="new-todo" placeholder="Task" value={title} autoFocus onChange={this.handleChangeTask} />
-        <input className="new-todo-form__timer" placeholder="Min" value={minutes} onChange={this.handleChangeMinute} />
-        <input
-          className="new-todo-form__timer"
-          placeholder="Sec"
-          onKeyDown={this.handleKeyDown}
-          onChange={this.handleChangeSeconds}
-          value={seconds}
-        />
+        <input name="task" className="new-todo" placeholder="Task" autoFocus />
+        <input name="minutes" className="new-todo-form__timer" placeholder="Min" />
+        <input name="seconds" className="new-todo-form__timer" placeholder="Sec" />
+        <button type="submit" hidden></button>
       </form>
     );
   }
