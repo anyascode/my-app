@@ -10,8 +10,14 @@ class NewTaskForm extends Component {
     const minutes = formData.get('minutes');
     const seconds = formData.get('seconds');
 
-    if (task.trim() !== '' && Number.isInteger(Number(minutes)) && Number.isInteger(Number(seconds))) {
-      this.props.onAddTodo(task.trim(), Number(minutes || 0) * 60 + Number(seconds || 0));
+    if (
+      task.trim() !== '' &&
+      Number.isInteger(Number(minutes)) &&
+      Number.isInteger(Number(seconds)) &&
+      minutes.length !== 0 &&
+      seconds.length !== 0
+    ) {
+      this.props.onAddTodo(task.trim(), Number(minutes) * 60 + Number(seconds));
       e.currentTarget.reset();
     }
   };

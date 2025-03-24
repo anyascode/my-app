@@ -66,7 +66,9 @@ class ToDoApp extends Component {
   }
   completeTodo(todoId) {
     this.setState((prev) => ({
-      tasks: prev.tasks.map((task) => (task.id === todoId ? { ...task, done: !task.done } : task)),
+      tasks: prev.tasks.map((task) =>
+        task.id === todoId ? { ...task, done: !task.done, status: 'done', seconds: 0 } : task
+      ),
     }));
   }
   handleFilterChange(newFilter) {
