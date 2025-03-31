@@ -1,9 +1,8 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
-class NewTaskForm extends Component {
-  handleSubmit = (e) => {
+function NewTaskForm({ onAddTodo }) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const task = formData.get('task');
@@ -17,20 +16,19 @@ class NewTaskForm extends Component {
       minutes.length !== 0 &&
       seconds.length !== 0
     ) {
-      this.props.onAddTodo(task.trim(), Number(minutes) * 60 + Number(seconds));
+      onAddTodo(task.trim(), Number(minutes) * 60 + Number(seconds));
       e.currentTarget.reset();
     }
   };
-  render() {
-    return (
-      <form className="new-todo-form" onSubmit={this.handleSubmit}>
-        <input name="task" className="new-todo" placeholder="Task" autoFocus />
-        <input name="minutes" className="new-todo-form__timer" placeholder="Min" />
-        <input name="seconds" className="new-todo-form__timer" placeholder="Sec" />
-        <button type="submit" hidden></button>
-      </form>
-    );
-  }
+
+  return (
+    <form className="new-todo-form" onSubmit={handleSubmit}>
+      <input name="task" className="new-todo" placeholder="Task" autoFocus />
+      <input name="minutes" className="new-todo-form__timer" placeholder="Min" />
+      <input name="seconds" className="new-todo-form__timer" placeholder="Sec" />
+      <button type="submit" hidden></button>
+    </form>
+  );
 }
 
 NewTaskForm.propTypes = {
