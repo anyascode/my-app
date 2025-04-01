@@ -23,7 +23,7 @@ function EditTask({ editTask, task }) {
       <input
         type="text"
         className="edit"
-        onKeyDown={() => handleKeyDown}
+        onKeyDown={handleKeyDown}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         autoFocus
