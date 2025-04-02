@@ -48,10 +48,6 @@ function ToDoApp() {
     );
   }
 
-  function handleFilterChange(newFilter) {
-    setFilter(newFilter);
-  }
-
   function handleClearCompleted() {
     setTasks((prev) => prev.filter((task) => !task.done));
   }
@@ -95,7 +91,7 @@ function ToDoApp() {
         />
         <Footer
           currentFilter={filter}
-          onFilterChange={handleFilterChange}
+          onFilterChange={(newFilter) => setFilter(newFilter)}
           onClearCompleted={handleClearCompleted}
           tasksNumber={remainingTasks}
         />

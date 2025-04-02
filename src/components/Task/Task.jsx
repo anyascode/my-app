@@ -4,10 +4,18 @@ import './Task.css';
 
 function Task({ title, onDelete, todoId, onComplete, isChecked, createdAt, onEdit, seconds, onStart, onPause }) {
   const showTime = (seconds) => {
-    const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const days = String(Math.floor(seconds / 60 / 60 / 24));
+    const hr = String(Math.floor(seconds / 60 / 60) % 24).padStart(2, '0');
+    const min = String(Math.floor(seconds / 60) % 60).padStart(2, '0');
     const sec = String(seconds % 60).padStart(2, '0');
+    if (seconds >= 86400) {
+      return `${days}d ${hr}:${min}:${sec}`;
+    } else if (seconds >= 3600) {
+      return ` ${hr}:${min}:${sec}`;
+    }
     return `${min}:${sec}`;
   };
+
   return (
     <li className={isChecked ? 'completed' : ''}>
       <div className="view">
@@ -15,8 +23,8 @@ function Task({ title, onDelete, todoId, onComplete, isChecked, createdAt, onEdi
         <label>
           <span className="title">{title}</span>
           <span className="description">
-            <button className="icon icon-play" onClick={() => onStart()}></button>
-            <button className="icon icon-pause" onClick={() => onPause()}></button>
+            <button className={seconds === 0 ? 'destroy' : 'icon icon-play'} onClick={() => onStart()}></button>
+            <button className={seconds === 0 ? 'destroy' : 'icon icon-pause'} onClick={() => onPause()}></button>
             {showTime(seconds)}
           </span>
           <span className="description">
