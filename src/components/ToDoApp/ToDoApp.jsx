@@ -20,7 +20,7 @@ function ToDoApp() {
       );
     }, 1000);
     return () => clearInterval(timeoutId);
-  }, [tasks]);
+  }, []);
 
   function handleAddTodo(title, seconds) {
     setTasks((prev) => [
